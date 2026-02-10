@@ -7,6 +7,90 @@ function escapeHTML(value) {
     .replaceAll("'", "&#39;");
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+const languageKeywords = {
+  go: ["func", "package", "import", "return", "if", "else", "for", "range", "switch", "case", "type", "struct", "interface", "var", "const", "go", "defer", "select", "map", "chan"],
+  js: ["function", "const", "let", "var", "return", "if", "else", "for", "while", "switch", "case", "class", "new", "try", "catch", "async", "await", "import", "export"],
+  ts: ["function", "const", "let", "var", "return", "if", "else", "for", "while", "switch", "case", "class", "new", "try", "catch", "async", "await", "import", "export", "interface", "type", "extends", "implements"],
+  bash: ["if", "then", "else", "fi", "for", "in", "do", "done", "case", "esac", "while", "function", "echo", "export"],
+  json: [],
+  yaml: [],
+  python: ["def", "class", "return", "if", "elif", "else", "for", "while", "import", "from", "as", "try", "except", "finally", "with", "lambda", "yield", "async", "await"],
+};
+
+function detectLanguage(rawLanguage) {
+  const lang = String(rawLanguage || "").toLowerCase().trim();
+  if (lang === "javascript") return "js";
+  if (lang === "typescript") return "ts";
+  if (lang === "sh" || lang === "shell" || lang === "zsh") return "bash";
+  if (lang === "py") return "python";
+  if (lang === "golang") return "go";
+  if (lang === "yml") return "yaml";
+  if (lang in languageKeywords) return lang;
+  return "";
+}
+
+function wrapWithLanguageKeywords(escapedCode, lang) {
+  const keywords = languageKeywords[lang];
+  if (!keywords || keywords.length === 0) {
+    return escapedCode;
+  }
+  const pattern = new RegExp(`\\b(${keywords.map(escapeRegExp).join("|")})\\b`, "g");
+  return escapedCode.replace(pattern, '<span class="md-code-keyword">$1</span>');
+}
+
+function highlightJSON(rawCode) {
+  let escaped = escapeHTML(rawCode);
+  escaped = escaped.replace(/"(\\.|[^"\\])*"(?=\s*:)/g, '<span class="md-code-key">$&</span>');
+  escaped = escaped.replace(/"(\\.|[^"\\])*"/g, '<span class="md-code-string">$&</span>');
+  escaped = escaped.replace(/\b(true|false|null)\b/g, '<span class="md-code-keyword">$1</span>');
+  escaped = escaped.replace(/\b-?\d+(\.\d+)?([eE][+-]?\d+)?\b/g, '<span class="md-code-number">$&</span>');
+  return escaped;
+}
+
+function highlightYAML(rawCode) {
+  let escaped = escapeHTML(rawCode);
+  escaped = escaped.replace(/^(\s*[\w-]+)(\s*:)/gm, '<span class="md-code-key">$1</span>$2');
+  escaped = escaped.replace(/"(\\.|[^"\\])*"|'([^'\\]|\\.)*'/g, '<span class="md-code-string">$&</span>');
+  escaped = escaped.replace(/\b(true|false|null|yes|no)\b/gi, '<span class="md-code-keyword">$&</span>');
+  escaped = escaped.replace(/\b-?\d+(\.\d+)?\b/g, '<span class="md-code-number">$&</span>');
+  return escaped;
+}
+
+function highlightGeneric(rawCode, lang) {
+  let escaped = escapeHTML(rawCode);
+  escaped = escaped.replace(/("(\\.|[^"\\])*"|'([^'\\]|\\.)*')/g, '<span class="md-code-string">$1</span>');
+  escaped = escaped.replace(/\b-?\d+(\.\d+)?\b/g, '<span class="md-code-number">$&</span>');
+  escaped = escaped.replace(/\/\/[^\n]*/g, '<span class="md-code-comment">$&</span>');
+  escaped = escaped.replace(/#[^\n]*/g, '<span class="md-code-comment">$&</span>');
+  return wrapWithLanguageKeywords(escaped, lang);
+}
+
+function highlightCode(rawCode, rawLanguage) {
+  const lang = detectLanguage(rawLanguage);
+  if (lang === "json") {
+    return highlightJSON(rawCode);
+  }
+  if (lang === "yaml") {
+    return highlightYAML(rawCode);
+  }
+  return highlightGeneric(rawCode, lang);
+}
+
+function applySyntaxHighlighting(root) {
+  const nodes = root.querySelectorAll("pre code");
+  for (const node of nodes) {
+    const className = node.className || "";
+    const match = /language-([a-z0-9_-]+)/i.exec(className);
+    const lang = match ? match[1] : "";
+    const raw = node.textContent || "";
+    node.innerHTML = highlightCode(raw, lang);
+  }
+}
+
 function sanitizeURL(raw) {
   if (!raw) {
     return "";
@@ -184,6 +268,7 @@ function render(el, props) {
   applyTheme(el, props?.theme);
   el.classList.add("md-renderer");
   el.innerHTML = renderMarkdown(markdown);
+  applySyntaxHighlighting(el);
 }
 
 export function mount(el, props) {

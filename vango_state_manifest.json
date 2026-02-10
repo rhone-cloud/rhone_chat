@@ -5,7 +5,7 @@
   "buildSchema": "bs:v1:e3b0c44298fc",
   "primitives": {
     "rhone_chat/app/routes.ChatRoot#setup0.local.action@0": {
-      "stableID": "d81881d7",
+      "stableID": "0f9b48e4",
       "class": "local",
       "kind": "action",
       "codecFingerprint": "fp:v1:17bf886d7f0a66f07e563f9aa9bbe8e237e64d2a4862643edc3aa55825205c80",
@@ -13,12 +13,12 @@
       "debugName": "loadChatsAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 103,
+        "line": 104,
         "col": 22
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.action@1": {
-      "stableID": "4cd2d1c1",
+      "stableID": "85c49bdb",
       "class": "local",
       "kind": "action",
       "codecFingerprint": "fp:v1:2624aa9a712755261de6ba9772c299365c8eecdb8849f88df93629af990de661",
@@ -26,12 +26,12 @@
       "debugName": "loadMessagesAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 130,
+        "line": 131,
         "col": 25
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.action@2": {
-      "stableID": "e752667d",
+      "stableID": "190e3746",
       "class": "local",
       "kind": "action",
       "codecFingerprint": "fp:v1:67d098aa4c6c18da2c5dc237a33a7f9b166cab3bd4ba0d0d795139142e0d13c9",
@@ -39,12 +39,12 @@
       "debugName": "createChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 159,
+        "line": 160,
         "col": 23
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.effect@0": {
-      "stableID": "5bd084e9",
+      "stableID": "9bb835d6",
       "class": "local",
       "kind": "effect",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
@@ -52,12 +52,12 @@
       "debugName": "createChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 189,
+        "line": 190,
         "col": 3
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.effect@1": {
-      "stableID": "540000b1",
+      "stableID": "deaee0ba",
       "class": "local",
       "kind": "effect",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
@@ -65,12 +65,12 @@
       "debugName": "createChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 199,
+        "line": 200,
         "col": 3
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.onmount@0": {
-      "stableID": "fef78030",
+      "stableID": "17b0ff56",
       "class": "local",
       "kind": "onmount",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
@@ -78,12 +78,12 @@
       "debugName": "createChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 184,
+        "line": 185,
         "col": 3
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@0": {
-      "stableID": "9b65d766",
+      "stableID": "06c6ecdc",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:f9a49008bb23464df3798ce30b8cd6374cdfe27dc441360e865187b8f2e75a46",
@@ -91,12 +91,12 @@
       "debugName": "chats",
       "source": {
         "file": "app/routes/index.go",
-        "line": 89,
+        "line": 90,
         "col": 12
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@1": {
-      "stableID": "5bc341cb",
+      "stableID": "a9c3f9cf",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:a0771a92ef22a342514887e8e95bc006518ef6eb7fbe146e8930b4a9c50db318",
@@ -104,12 +104,12 @@
       "debugName": "messages",
       "source": {
         "file": "app/routes/index.go",
-        "line": 90,
+        "line": 91,
         "col": 15
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@10": {
-      "stableID": "602e9d50",
+      "stableID": "e88168fd",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:41f520f90e9cc9458b0ee392ee4b7e474da42b9cd0c8725da11e93d92bab00c6",
@@ -117,12 +117,12 @@
       "debugName": "runTrigger",
       "source": {
         "file": "app/routes/index.go",
-        "line": 100,
+        "line": 101,
         "col": 17
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@11": {
-      "stableID": "5698e303",
+      "stableID": "9bb51fb8",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:f741c9f871696f686e18c353b25327c15630e1fbb0f4bb4e973ef7cfc9fb9292",
@@ -130,12 +130,12 @@
       "debugName": "pendingRun",
       "source": {
         "file": "app/routes/index.go",
-        "line": 101,
+        "line": 102,
         "col": 17
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@2": {
-      "stableID": "d6467c19",
+      "stableID": "83feeebd",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -143,12 +143,12 @@
       "debugName": "activeChatID",
       "source": {
         "file": "app/routes/index.go",
-        "line": 91,
+        "line": 92,
         "col": 19
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@3": {
-      "stableID": "ec8a0434",
+      "stableID": "335a7965",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -156,12 +156,12 @@
       "debugName": "inputText",
       "source": {
         "file": "app/routes/index.go",
-        "line": 92,
+        "line": 93,
         "col": 16
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@4": {
-      "stableID": "7ca0fa91",
+      "stableID": "8617a5cd",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -169,12 +169,12 @@
       "debugName": "selectedModel",
       "source": {
         "file": "app/routes/index.go",
-        "line": 93,
+        "line": 94,
         "col": 20
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@5": {
-      "stableID": "3620118a",
+      "stableID": "4e2c0d96",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -182,12 +182,12 @@
       "debugName": "errorText",
       "source": {
         "file": "app/routes/index.go",
-        "line": 94,
+        "line": 95,
         "col": 16
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@6": {
-      "stableID": "ac8c4866",
+      "stableID": "04e9871e",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:bd0f738432faad57453a335bb6ec3cef8e52a0695dfa14c62d0cf900dcbdd26c",
@@ -195,12 +195,12 @@
       "debugName": "isThinking",
       "source": {
         "file": "app/routes/index.go",
-        "line": 95,
+        "line": 96,
         "col": 17
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@7": {
-      "stableID": "a08bede8",
+      "stableID": "49be5647",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -208,12 +208,12 @@
       "debugName": "activeRunID",
       "source": {
         "file": "app/routes/index.go",
-        "line": 96,
+        "line": 97,
         "col": 18
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@8": {
-      "stableID": "73c24e03",
+      "stableID": "ccdd2113",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -221,12 +221,12 @@
       "debugName": "activeAssistantID",
       "source": {
         "file": "app/routes/index.go",
-        "line": 97,
+        "line": 98,
         "col": 24
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@9": {
-      "stableID": "de7453f3",
+      "stableID": "8e5b3826",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -234,7 +234,7 @@
       "debugName": "themeMode",
       "source": {
         "file": "app/routes/index.go",
-        "line": 98,
+        "line": 99,
         "col": 16
       }
     }

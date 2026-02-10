@@ -63,6 +63,7 @@ type themePalette struct {
 	ThemeToggle      string
 	StopButton       string
 	ErrorText        string
+	ChatBody         string
 	AssistantBubble  string
 	UserBubble       string
 	ThinkingText     string
@@ -464,7 +465,7 @@ func ChatRoot(props vango.NoProps) vango.Component {
 				errorNode = Div(Class("mb-2 text-sm "+palette.ErrorText), Text(errorMessage))
 			}
 
-			return Div(Class("h-screen "+palette.AppRoot),
+			return Div(Class("h-screen chat-shell "+palette.AppRoot),
 				Div(Class("h-full flex"),
 					Aside(Class("w-80 flex flex-col "+palette.Sidebar),
 						Div(Class("p-4 "+palette.SidebarSection),
@@ -530,7 +531,7 @@ func ChatRoot(props vango.NoProps) vango.Component {
 								),
 							),
 						),
-						Div(Class("flex-1 overflow-y-auto p-4 space-y-4"),
+						Div(Class("flex-1 overflow-y-auto p-4 space-y-4 "+palette.ChatBody),
 							RangeKeyed(messageList,
 								func(message MessageView) any { return message.ID },
 								func(message MessageView) *vango.VNode {
@@ -565,7 +566,6 @@ func ChatRoot(props vango.NoProps) vango.Component {
 
 									return Div(Class(containerClass),
 										Div(Class(bubbleClass),
-											Div(Class("text-xs uppercase tracking-wide mb-1 "+palette.RoleText), Text(message.Role)),
 											Div(
 												Class("text-[10px] mb-2 "+palette.StatusText),
 												Attr("aria-hidden", "true"),
@@ -786,8 +786,9 @@ func paletteFor(mode string) themePalette {
 			ThemeToggle:      "border-slate-300 text-slate-700 hover:bg-slate-100",
 			StopButton:       "border-red-300 text-red-700 hover:bg-red-100",
 			ErrorText:        "text-red-700",
-			AssistantBubble:  "bg-white border-slate-300 text-slate-900",
-			UserBubble:       "bg-blue-600 border-blue-700 text-white",
+			ChatBody:         "bg-white",
+			AssistantBubble:  "bg-transparent border-transparent text-slate-900",
+			UserBubble:       "bg-slate-200 border-[#2445FF] text-slate-900",
 			ThinkingText:     "text-slate-600",
 			StatusText:       "text-slate-500",
 			RoleText:         "text-slate-600",
@@ -802,29 +803,30 @@ func paletteFor(mode string) themePalette {
 
 	return themePalette{
 		AppRoot:          "bg-[#0b1320] text-white",
-		Sidebar:          "border-r border-white/10 bg-[#0f1a2b]",
+		Sidebar:          "border-r border-white/10 bg-black",
 		SidebarSection:   "border-b border-white/10",
-		NewChatButton:    "bg-[#1e2c45] hover:bg-[#253756] text-white",
+		NewChatButton:    "bg-zinc-900 hover:bg-zinc-800 text-white",
 		ChatButtonBase:   "w-full text-left rounded-md px-3 py-2 text-sm transition-colors border border-transparent",
-		ChatButtonIdle:   "bg-[#15243a] hover:bg-[#1b2d47]",
-		ChatButtonActive: "bg-[#29416a] border-[#3f5f90]",
+		ChatButtonIdle:   "bg-zinc-950 hover:bg-zinc-900",
+		ChatButtonActive: "bg-zinc-900 border-white/20",
 		ChatMeta:         "text-white/60",
-		Header:           "border-b border-white/10 bg-[#0f1a2b]",
+		Header:           "border-b border-white/10 bg-black",
 		HeaderTitle:      "text-white/80",
-		ModelSelect:      "bg-[#15243a] border border-white/20 text-white",
+		ModelSelect:      "bg-zinc-950 border border-white/20 text-white",
 		ThemeToggle:      "border-white/30 text-white hover:bg-white/10",
 		StopButton:       "border-red-400/40 text-red-200 hover:bg-red-400/10",
 		ErrorText:        "text-red-300",
-		AssistantBubble:  "bg-[#142235] border-white/10 text-white",
-		UserBubble:       "bg-[#2457d6] border-[#3565dc] text-white",
+		ChatBody:         "bg-black",
+		AssistantBubble:  "bg-transparent border-transparent text-white",
+		UserBubble:       "bg-zinc-900 border-[#2445FF] text-white",
 		ThinkingText:     "text-white/70",
 		StatusText:       "text-white/50",
 		RoleText:         "text-white/60",
 		ToolCard:         "border-white/10 bg-black/20",
 		ToolText:         "text-white/70",
 		ToolErrorText:    "text-red-200",
-		Composer:         "border-t border-white/10 bg-[#0f1a2b]",
-		Input:            "bg-[#15243a] border border-white/20 text-white placeholder:text-white/60",
+		Composer:         "border-t border-white/10 bg-black",
+		Input:            "bg-zinc-950 border border-white/20 text-white placeholder:text-white/60",
 		SendButton:       "bg-[#2457d6] text-white hover:bg-[#2e63e0]",
 	}
 }

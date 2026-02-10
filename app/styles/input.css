@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap");
 
 /* Use class-based dark mode instead of media query */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -6,6 +7,10 @@
 /* Custom dark mode background color */
 @theme {
   --color-dark-bg: #091D39;
+}
+
+.chat-shell {
+  font-family: "Hind", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
 .md-renderer {
@@ -81,7 +86,7 @@
 }
 
 .md-renderer[data-md-theme="dark"] code {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgb(24 24 27);
   color: rgb(224 242 254);
 }
 
@@ -102,14 +107,58 @@
   padding: 0;
 }
 
+.md-renderer .md-code-keyword {
+  font-weight: 600;
+}
+
 .md-renderer[data-md-theme="dark"] pre {
-  background: rgb(15 23 42);
-  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgb(24 24 27);
+  border: none;
+}
+
+.md-renderer[data-md-theme="dark"] .md-code-keyword {
+  color: rgb(196 181 253);
+}
+
+.md-renderer[data-md-theme="dark"] .md-code-string {
+  color: rgb(134 239 172);
+}
+
+.md-renderer[data-md-theme="dark"] .md-code-number {
+  color: rgb(253 224 71);
+}
+
+.md-renderer[data-md-theme="dark"] .md-code-comment {
+  color: rgb(161 161 170);
+}
+
+.md-renderer[data-md-theme="dark"] .md-code-key {
+  color: rgb(125 211 252);
 }
 
 .md-renderer[data-md-theme="light"] pre {
   background: rgb(241 245 249);
   border: 1px solid rgb(203 213 225);
+}
+
+.md-renderer[data-md-theme="light"] .md-code-keyword {
+  color: rgb(109 40 217);
+}
+
+.md-renderer[data-md-theme="light"] .md-code-string {
+  color: rgb(21 128 61);
+}
+
+.md-renderer[data-md-theme="light"] .md-code-number {
+  color: rgb(180 83 9);
+}
+
+.md-renderer[data-md-theme="light"] .md-code-comment {
+  color: rgb(100 116 139);
+}
+
+.md-renderer[data-md-theme="light"] .md-code-key {
+  color: rgb(30 64 175);
 }
 
 .md-renderer a {
