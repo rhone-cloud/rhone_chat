@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* Use class-based dark mode instead of media query */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Custom dark mode background color */
+@theme {
+  --color-dark-bg: #091D39;
+}
+
+.md-renderer {
+  font-family: "Charter", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+.md-renderer[data-md-theme="dark"] {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.md-renderer[data-md-theme="light"] {
+  color: rgb(15 23 42);
+}
+
+.md-renderer :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: 0.9rem;
+  margin-bottom: 0.4rem;
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.md-renderer h1 {
+  font-size: 1.45rem;
+}
+
+.md-renderer h2 {
+  font-size: 1.3rem;
+}
+
+.md-renderer h3 {
+  font-size: 1.15rem;
+}
+
+.md-renderer p {
+  margin-top: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.md-renderer blockquote {
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid rgba(100, 116, 139, 0.5);
+  font-style: italic;
+}
+
+.md-renderer ul,
+.md-renderer ol {
+  margin: 0.6rem 0 0.6rem 1.1rem;
+  padding-left: 0.7rem;
+}
+
+.md-renderer ul {
+  list-style: disc;
+}
+
+.md-renderer ol {
+  list-style: decimal;
+}
+
+.md-renderer li + li {
+  margin-top: 0.25rem;
+}
+
+.md-renderer code {
+  font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.35rem;
+}
+
+.md-renderer[data-md-theme="dark"] code {
+  background: rgba(15, 23, 42, 0.85);
+  color: rgb(224 242 254);
+}
+
+.md-renderer[data-md-theme="light"] code {
+  background: rgb(226 232 240);
+  color: rgb(15 23 42);
+}
+
+.md-renderer pre {
+  overflow-x: auto;
+  margin: 0.8rem 0;
+  border-radius: 0.55rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.md-renderer pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.md-renderer[data-md-theme="dark"] pre {
+  background: rgb(15 23 42);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.md-renderer[data-md-theme="light"] pre {
+  background: rgb(241 245 249);
+  border: 1px solid rgb(203 213 225);
+}
+
+.md-renderer a {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+}
+
+.md-renderer[data-md-theme="dark"] a {
+  color: rgb(147 197 253);
+}
+
+.md-renderer[data-md-theme="light"] a {
+  color: rgb(37 99 235);
+}
