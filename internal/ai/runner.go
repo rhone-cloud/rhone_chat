@@ -3,6 +3,7 @@ package ai
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -59,22 +60,20 @@ func (r *Runner) Stream(ctx context.Context, model string, messages []Message, c
 	if !IsAllowedModel(model) {
 		return StreamResult{}, fmt.Errorf("unsupported model %q", model)
 	}
+	resolvedModel := ResolveModel(model)
 
-	requestMessages := make([]vai.Message, 0, len(messages))
-	for _, message := range messages {
-		requestMessages = append(requestMessages, vai.Message{
-			Role:    message.Role,
-			Content: []vai.ContentBlock{vai.Text(message.Content)},
-		})
-	}
+	requestMessages, systemPrompt := normalizeMessagesForRequest(messages)
 
 	req := &vai.MessageRequest{
-		Model:    model,
+		Model:    resolvedModel,
 		Messages: requestMessages,
 		Tools: []vai.Tool{
 			vai.WebSearch(),
 		},
 		ToolChoice: vai.ToolChoiceAuto(),
+	}
+	if systemPrompt != "" {
+		req.System = systemPrompt
 	}
 
 	runCtx := ctx
@@ -97,7 +96,7 @@ func (r *Runner) Stream(ctx context.Context, model string, messages []Message, c
 
 	stream, err := r.client.Messages.RunStream(runCtx, req, opts...)
 	if err != nil {
-		return StreamResult{}, err
+		return StreamResult{}, wrapStreamError(model, resolvedModel, "start", err)
 	}
 	defer stream.Close()
 
@@ -142,19 +141,38 @@ func (r *Runner) Stream(ctx context.Context, model string, messages []Message, c
 		},
 	})
 	if processErr != nil {
-		return StreamResult{}, processErr
+		return StreamResult{}, wrapStreamError(model, resolvedModel, "process", processErr)
 	}
 	if err := stream.Err(); err != nil {
-		return StreamResult{}, err
+		return StreamResult{}, wrapStreamError(model, resolvedModel, "stream", err)
 	}
 
 	final := stream.Result()
+	stopReason := string(final.StopReason)
+	if stopReason == "error" {
+		return StreamResult{}, fmt.Errorf("ai stream failed for model %q (provider model %q): stop_reason=error", model, resolvedModel)
+	}
+
 	return StreamResult{
-		StopReason:    string(final.StopReason),
+		StopReason:    stopReason,
 		ToolCallCount: final.ToolCallCount,
 		TurnCount:     final.TurnCount,
 		Usage:         final.Usage,
 	}, nil
+}
+
+func wrapStreamError(selectedModel, providerModel, stage string, err error) error {
+	if err == nil {
+		return fmt.Errorf("ai stream failed for model %q at %s", selectedModel, stage)
+	}
+	if errors.Is(err, context.Canceled) {
+		return err
+	}
+	message := strings.TrimSpace(err.Error())
+	if message == "" {
+		message = "provider returned an empty error"
+	}
+	return fmt.Errorf("ai stream failed for model %q (provider model %q) at %s: %s", selectedModel, providerModel, stage, message)
 }
 
 func contentBlocksToText(blocks []vai.ContentBlock) string {
@@ -170,4 +188,23 @@ func contentBlocksToText(blocks []vai.ContentBlock) string {
 		parts = append(parts, string(raw))
 	}
 	return strings.Join(parts, "\n")
+}
+
+func normalizeMessagesForRequest(messages []Message) ([]vai.Message, string) {
+	requestMessages := make([]vai.Message, 0, len(messages))
+	systemParts := make([]string, 0, 1)
+	for _, message := range messages {
+		if message.Role == "system" {
+			systemText := strings.TrimSpace(message.Content)
+			if systemText != "" {
+				systemParts = append(systemParts, systemText)
+			}
+			continue
+		}
+		requestMessages = append(requestMessages, vai.Message{
+			Role:    message.Role,
+			Content: []vai.ContentBlock{vai.Text(message.Content)},
+		})
+	}
+	return requestMessages, strings.Join(systemParts, "\n\n")
 }

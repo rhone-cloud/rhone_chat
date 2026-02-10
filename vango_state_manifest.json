@@ -5,7 +5,7 @@
   "buildSchema": "bs:v1:e3b0c44298fc",
   "primitives": {
     "rhone_chat/app/routes.ChatRoot#setup0.local.action@0": {
-      "stableID": "a7d4dbe4",
+      "stableID": "d81881d7",
       "class": "local",
       "kind": "action",
       "codecFingerprint": "fp:v1:17bf886d7f0a66f07e563f9aa9bbe8e237e64d2a4862643edc3aa55825205c80",
@@ -18,7 +18,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.action@1": {
-      "stableID": "05e10fd1",
+      "stableID": "4cd2d1c1",
       "class": "local",
       "kind": "action",
       "codecFingerprint": "fp:v1:2624aa9a712755261de6ba9772c299365c8eecdb8849f88df93629af990de661",
@@ -31,7 +31,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.action@2": {
-      "stableID": "1a26580f",
+      "stableID": "e752667d",
       "class": "local",
       "kind": "action",
       "codecFingerprint": "fp:v1:67d098aa4c6c18da2c5dc237a33a7f9b166cab3bd4ba0d0d795139142e0d13c9",
@@ -44,7 +44,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.effect@0": {
-      "stableID": "4209269e",
+      "stableID": "5bd084e9",
       "class": "local",
       "kind": "effect",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
@@ -57,7 +57,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.effect@1": {
-      "stableID": "49b400e4",
+      "stableID": "540000b1",
       "class": "local",
       "kind": "effect",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
@@ -70,7 +70,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.onmount@0": {
-      "stableID": "7a264893",
+      "stableID": "fef78030",
       "class": "local",
       "kind": "onmount",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
@@ -83,7 +83,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@0": {
-      "stableID": "0de25fd0",
+      "stableID": "9b65d766",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:f9a49008bb23464df3798ce30b8cd6374cdfe27dc441360e865187b8f2e75a46",
@@ -96,7 +96,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@1": {
-      "stableID": "a2579995",
+      "stableID": "5bc341cb",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:a0771a92ef22a342514887e8e95bc006518ef6eb7fbe146e8930b4a9c50db318",
@@ -109,7 +109,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@10": {
-      "stableID": "b2d0ec6c",
+      "stableID": "602e9d50",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:41f520f90e9cc9458b0ee392ee4b7e474da42b9cd0c8725da11e93d92bab00c6",
@@ -122,7 +122,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@11": {
-      "stableID": "63957b04",
+      "stableID": "5698e303",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:f741c9f871696f686e18c353b25327c15630e1fbb0f4bb4e973ef7cfc9fb9292",
@@ -135,7 +135,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@2": {
-      "stableID": "06498bc4",
+      "stableID": "d6467c19",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -148,7 +148,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@3": {
-      "stableID": "10b23c48",
+      "stableID": "ec8a0434",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -161,7 +161,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@4": {
-      "stableID": "9c34bac0",
+      "stableID": "7ca0fa91",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -174,7 +174,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@5": {
-      "stableID": "959fcdf8",
+      "stableID": "3620118a",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -187,7 +187,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@6": {
-      "stableID": "b9ae584d",
+      "stableID": "ac8c4866",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:bd0f738432faad57453a335bb6ec3cef8e52a0695dfa14c62d0cf900dcbdd26c",
@@ -200,7 +200,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@7": {
-      "stableID": "806af8bc",
+      "stableID": "a08bede8",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -213,7 +213,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@8": {
-      "stableID": "dbd3630b",
+      "stableID": "73c24e03",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
@@ -226,7 +226,7 @@
       }
     },
     "rhone_chat/app/routes.ChatRoot#setup0.local.signal@9": {
-      "stableID": "34bcf991",
+      "stableID": "de7453f3",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",

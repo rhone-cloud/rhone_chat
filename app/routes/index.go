@@ -320,6 +320,9 @@ func ChatRoot(props vango.NoProps) vango.Component {
 							streamErrorText = streamErr.Error()
 						}
 					}
+					if status == "error" && strings.TrimSpace(streamErrorText) == "" {
+						streamErrorText = fmt.Sprintf("Model %s failed without a provider error message.", run.Model)
+					}
 
 					if err := chatService.CompleteAssistant(workCtx, run.AssistantMessageID, finalContent, status); err != nil {
 						return runExecution{}, err
@@ -351,11 +354,18 @@ func ChatRoot(props vango.NoProps) vango.Component {
 
 					if err != nil {
 						errorText.Set(err.Error())
-						messages.Set(markAssistantStatus(messages.Peek(), run.AssistantMessageID, "error"))
+						messages.Set(setAssistantError(messages.Peek(), run.AssistantMessageID, err.Error()))
 						return
 					}
 
 					messages.Set(markAssistantStatus(messages.Peek(), execution.AssistantMessageID, execution.Status))
+					if execution.Status == "error" {
+						errMessage := execution.ErrText
+						if strings.TrimSpace(errMessage) == "" {
+							errMessage = fmt.Sprintf("Model %s failed without a provider error message.", run.Model)
+						}
+						messages.Set(setAssistantError(messages.Peek(), execution.AssistantMessageID, errMessage))
+					}
 					if execution.ErrText != "" {
 						errorText.Set(execution.ErrText)
 					}
@@ -656,6 +666,25 @@ func markAssistantStatus(messages []MessageView, assistantMessageID, status stri
 			continue
 		}
 		next[index].Status = status
+		break
+	}
+	return next
+}
+
+func setAssistantError(messages []MessageView, assistantMessageID, errMessage string) []MessageView {
+	next := make([]MessageView, len(messages))
+	copy(next, messages)
+	for index := range next {
+		if next[index].ID != assistantMessageID {
+			continue
+		}
+		next[index].Status = "error"
+		if strings.TrimSpace(errMessage) == "" {
+			errMessage = "Assistant request failed."
+		}
+		if strings.TrimSpace(next[index].Content) == "" {
+			next[index].Content = "Error: " + errMessage
+		}
 		break
 	}
 	return next
