@@ -7,10 +7,10 @@ package routes
 import "github.com/vango-go/vango/pkg/runtime"
 
 func init() {
-	runtime.SetEmbeddedBindingsHash("6bb28cebd63802a4")
+	runtime.SetEmbeddedBindingsHash("752a5886c8279afa")
 	runtime.RegisterSetupCallsites(map[string][]runtime.SetupCallsite{
 		"rhone_chat/app/routes.ChatRoot": {
-			{Line: 85, SetupIndex: 0},
+			{Line: 94, SetupIndex: 0},
 		},
 	})
 	runtime.RegisterBindings(map[string]runtime.BindingInfo{
@@ -35,23 +35,37 @@ func init() {
 			Kind:             "action",
 			Class:            "local",
 		},
+		"rhone_chat/app/routes.ChatRoot#setup0.local.action@3": {
+			StableID:         "c15ee6a1",
+			DebugName:        "renameChatAction",
+			CodecFingerprint: "fp:v1:a4f82da79700e0e70028d59cc572aa113c030924f0c44a67aedbb528b0fa58a4",
+			Kind:             "action",
+			Class:            "local",
+		},
+		"rhone_chat/app/routes.ChatRoot#setup0.local.action@4": {
+			StableID:         "b9f8ba71",
+			DebugName:        "deleteChatAction",
+			CodecFingerprint: "fp:v1:fa30110db74287f322220d65817f476b95b391fe4d4e162792d46f662065721a",
+			Kind:             "action",
+			Class:            "local",
+		},
 		"rhone_chat/app/routes.ChatRoot#setup0.local.effect@0": {
 			StableID:         "9bb835d6",
-			DebugName:        "createChatAction",
+			DebugName:        "deleteChatAction",
 			CodecFingerprint: "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
 			Kind:             "effect",
 			Class:            "local",
 		},
 		"rhone_chat/app/routes.ChatRoot#setup0.local.effect@1": {
 			StableID:         "deaee0ba",
-			DebugName:        "createChatAction",
+			DebugName:        "deleteChatAction",
 			CodecFingerprint: "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
 			Kind:             "effect",
 			Class:            "local",
 		},
 		"rhone_chat/app/routes.ChatRoot#setup0.local.onmount@0": {
 			StableID:         "17b0ff56",
-			DebugName:        "createChatAction",
+			DebugName:        "deleteChatAction",
 			CodecFingerprint: "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
 			Kind:             "onmount",
 			Class:            "local",
@@ -72,13 +86,27 @@ func init() {
 		},
 		"rhone_chat/app/routes.ChatRoot#setup0.local.signal@10": {
 			StableID:         "e88168fd",
-			DebugName:        "runTrigger",
-			CodecFingerprint: "fp:v1:41f520f90e9cc9458b0ee392ee4b7e474da42b9cd0c8725da11e93d92bab00c6",
+			DebugName:        "editingChatID",
+			CodecFingerprint: "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
 			Kind:             "signal",
 			Class:            "local",
 		},
 		"rhone_chat/app/routes.ChatRoot#setup0.local.signal@11": {
 			StableID:         "9bb51fb8",
+			DebugName:        "renameTitle",
+			CodecFingerprint: "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
+			Kind:             "signal",
+			Class:            "local",
+		},
+		"rhone_chat/app/routes.ChatRoot#setup0.local.signal@12": {
+			StableID:         "ccac82cf",
+			DebugName:        "runTrigger",
+			CodecFingerprint: "fp:v1:41f520f90e9cc9458b0ee392ee4b7e474da42b9cd0c8725da11e93d92bab00c6",
+			Kind:             "signal",
+			Class:            "local",
+		},
+		"rhone_chat/app/routes.ChatRoot#setup0.local.signal@13": {
+			StableID:         "ada2fa79",
 			DebugName:        "pendingRun",
 			CodecFingerprint: "fp:v1:f741c9f871696f686e18c353b25327c15630e1fbb0f4bb4e973ef7cfc9fb9292",
 			Kind:             "signal",

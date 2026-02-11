@@ -85,6 +85,29 @@ func (s *Service) CreateChat(ctx context.Context, model string) (Chat, error) {
 	return s.store.CreateChat(ctx, uuid.NewString(), "New chat", model, now)
 }
 
+func (s *Service) RenameChat(ctx context.Context, chatID, title string) error {
+	trimmedChatID := strings.TrimSpace(chatID)
+	if trimmedChatID == "" {
+		return errors.New("chat id is required")
+	}
+	trimmedTitle := strings.TrimSpace(title)
+	if trimmedTitle == "" {
+		return errors.New("chat title cannot be empty")
+	}
+	if len(trimmedTitle) > 200 {
+		return errors.New("chat title is too long")
+	}
+	return s.store.RenameChat(ctx, trimmedChatID, trimmedTitle, time.Now().UTC())
+}
+
+func (s *Service) DeleteChat(ctx context.Context, chatID string) error {
+	trimmedChatID := strings.TrimSpace(chatID)
+	if trimmedChatID == "" {
+		return errors.New("chat id is required")
+	}
+	return s.store.DeleteChat(ctx, trimmedChatID)
+}
+
 func (s *Service) PersistRunStart(ctx context.Context, run PendingRun, userMessageContent string) error {
 	now := time.Now().UTC()
 	err := s.store.Transaction(ctx, func(tx *sql.Tx) error {

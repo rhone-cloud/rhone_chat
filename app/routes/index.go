@@ -41,6 +41,11 @@ type PendingRun struct {
 	UserContent        string
 }
 
+type renameChatRequest struct {
+	ChatID string
+	Title  string
+}
+
 type runExecution struct {
 	RunID              string
 	AssistantMessageID string
@@ -56,6 +61,10 @@ type themePalette struct {
 	ChatButtonBase   string
 	ChatButtonIdle   string
 	ChatButtonActive string
+	ChatActionButton string
+	ChatDangerButton string
+	ChatInput        string
+	ChatSaveButton   string
 	ChatMeta         string
 	Header           string
 	HeaderTitle      string
@@ -97,6 +106,8 @@ func ChatRoot(props vango.NoProps) vango.Component {
 		activeRunID := setup.Signal(&s, "")
 		activeAssistantID := setup.Signal(&s, "")
 		themeMode := setup.Signal(&s, "dark")
+		editingChatID := setup.Signal(&s, "")
+		renameTitle := setup.Signal(&s, "")
 
 		runTrigger := setup.Signal(&s, 0)
 		pendingRun := setup.Signal(&s, PendingRun{})
@@ -175,6 +186,71 @@ func ChatRoot(props vango.NoProps) vango.Component {
 				activeChatID.Set(chat.ID)
 				selectedModel.Set(chat.Model)
 				messages.Set([]MessageView{})
+				errorText.Set("")
+			}),
+			vango.ActionOnError(func(err error) {
+				errorText.Set(err.Error())
+			}),
+		)
+
+		renameChatAction := setup.Action(&s,
+			func(workCtx context.Context, request renameChatRequest) (string, error) {
+				if err := chatService.RenameChat(workCtx, request.ChatID, request.Title); err != nil {
+					return "", err
+				}
+				return strings.TrimSpace(request.Title), nil
+			},
+			vango.DropWhileRunning(),
+			vango.ActionOnSuccess(func(value any) {
+				updatedTitle, ok := value.(string)
+				if !ok {
+					return
+				}
+				chatID := editingChatID.Get()
+				if chatID == "" {
+					return
+				}
+				chats.Set(updateChatTitle(chats.Get(), chatID, updatedTitle))
+				editingChatID.Set("")
+				renameTitle.Set("")
+				errorText.Set("")
+			}),
+			vango.ActionOnError(func(err error) {
+				errorText.Set(err.Error())
+			}),
+		)
+
+		deleteChatAction := setup.Action(&s,
+			func(workCtx context.Context, chatID string) (string, error) {
+				if err := chatService.DeleteChat(workCtx, chatID); err != nil {
+					return "", err
+				}
+				return chatID, nil
+			},
+			vango.DropWhileRunning(),
+			vango.ActionOnSuccess(func(value any) {
+				deletedChatID, ok := value.(string)
+				if !ok {
+					return
+				}
+				currentChats := removeChatByID(chats.Get(), deletedChatID)
+				chats.Set(currentChats)
+				if editingChatID.Get() == deletedChatID {
+					editingChatID.Set("")
+					renameTitle.Set("")
+				}
+				if activeChatID.Get() == deletedChatID {
+					if len(currentChats) > 0 {
+						activeChatID.Set(currentChats[0].ID)
+						if chatService.IsAllowedModel(currentChats[0].Model) {
+							selectedModel.Set(currentChats[0].Model)
+						}
+					} else {
+						activeChatID.Set("")
+						messages.Set([]MessageView{})
+						createChatAction.Run(selectedModel.Get())
+					}
+				}
 				errorText.Set("")
 			}),
 			vango.ActionOnError(func(err error) {
@@ -434,7 +510,40 @@ func ChatRoot(props vango.NoProps) vango.Component {
 			if activeRunID.Get() != "" {
 				return
 			}
+			editingChatID.Set("")
+			renameTitle.Set("")
 			createChatAction.Run(selectedModel.Get())
+		}
+
+		onStartRename := func(chat chatsvc.Chat) {
+			if activeRunID.Get() != "" {
+				return
+			}
+			editingChatID.Set(chat.ID)
+			renameTitle.Set(chat.Title)
+			errorText.Set("")
+		}
+
+		onCancelRename := func() {
+			editingChatID.Set("")
+			renameTitle.Set("")
+		}
+
+		onSaveRename := func(chatID string) {
+			if activeRunID.Get() != "" {
+				return
+			}
+			renameChatAction.Run(renameChatRequest{
+				ChatID: chatID,
+				Title:  renameTitle.Get(),
+			})
+		}
+
+		onDeleteChat := func(chatID string) {
+			if activeRunID.Get() != "" {
+				return
+			}
+			deleteChatAction.Run(chatID)
 		}
 
 		onToggleTheme := func() {
@@ -484,16 +593,64 @@ func ChatRoot(props vango.NoProps) vango.Component {
 									if chat.ID == activeChat {
 										buttonClass = palette.ChatButtonBase + " " + palette.ChatButtonActive
 									}
-									return Button(
-										Class(buttonClass),
-										OnClick(func() {
-											activeChatID.Set(chat.ID)
-											if chatService.IsAllowedModel(chat.Model) {
-												selectedModel.Set(chat.Model)
-											}
-										}),
-										Div(Class("truncate font-medium"), Text(chat.Title)),
-										Div(Class("text-xs truncate mt-1 "+palette.ChatMeta), Text(chat.Model)),
+									isEditing := editingChatID.Get() == chat.ID
+									if isEditing {
+										return Div(Class(buttonClass+" space-y-2"),
+											Input(
+												Class("w-full rounded-md px-2 py-1 text-sm "+palette.ChatInput),
+												Value(renameTitle.Get()),
+												OnInput(func(value string) {
+													renameTitle.Set(value)
+												}),
+											),
+											Div(Class("flex gap-2"),
+												Button(
+													Class("rounded-md px-2 py-1 text-xs "+palette.ChatSaveButton),
+													OnClick(func() {
+														onSaveRename(chat.ID)
+													}),
+													Disabled(running || strings.TrimSpace(renameTitle.Get()) == ""),
+													Text("Save"),
+												),
+												Button(
+													Class("rounded-md px-2 py-1 text-xs "+palette.ChatActionButton),
+													OnClick(onCancelRename),
+													Disabled(running),
+													Text("Cancel"),
+												),
+											),
+										)
+									}
+									return Div(Class(buttonClass),
+										Button(
+											Class("w-full text-left"),
+											OnClick(func() {
+												activeChatID.Set(chat.ID)
+												if chatService.IsAllowedModel(chat.Model) {
+													selectedModel.Set(chat.Model)
+												}
+											}),
+											Div(Class("truncate font-medium"), Text(chat.Title)),
+											Div(Class("text-xs truncate mt-1 "+palette.ChatMeta), Text(chat.Model)),
+										),
+										Div(Class("mt-2 flex gap-2"),
+											Button(
+												Class("rounded-md px-2 py-1 text-xs "+palette.ChatActionButton),
+												OnClick(func() {
+													onStartRename(chat)
+												}),
+												Disabled(running),
+												Text("Rename"),
+											),
+											Button(
+												Class("rounded-md px-2 py-1 text-xs "+palette.ChatDangerButton),
+												OnClick(func() {
+													onDeleteChat(chat.ID)
+												}),
+												Disabled(running),
+												Text("Delete"),
+											),
+										),
 									)
 								},
 							),
@@ -644,6 +801,31 @@ func findChatByID(chats []chatsvc.Chat, chatID string) chatsvc.Chat {
 	return chatsvc.Chat{}
 }
 
+func updateChatTitle(chats []chatsvc.Chat, chatID, title string) []chatsvc.Chat {
+	next := make([]chatsvc.Chat, len(chats))
+	copy(next, chats)
+	for index := range next {
+		if next[index].ID != chatID {
+			continue
+		}
+		next[index].Title = title
+		next[index].UpdatedAt = time.Now().UTC()
+		break
+	}
+	return next
+}
+
+func removeChatByID(chats []chatsvc.Chat, chatID string) []chatsvc.Chat {
+	next := make([]chatsvc.Chat, 0, len(chats))
+	for _, chat := range chats {
+		if chat.ID == chatID {
+			continue
+		}
+		next = append(next, chat)
+	}
+	return next
+}
+
 func appendAssistantChunk(messages []MessageView, assistantMessageID, chunk string) []MessageView {
 	next := make([]MessageView, len(messages))
 	copy(next, messages)
@@ -779,6 +961,10 @@ func paletteFor(mode string) themePalette {
 			ChatButtonBase:   "w-full text-left rounded-md px-3 py-2 text-sm transition-colors border",
 			ChatButtonIdle:   "bg-white border-slate-300 hover:bg-slate-100",
 			ChatButtonActive: "bg-blue-100 border-blue-400",
+			ChatActionButton: "border border-slate-300 bg-white text-slate-700 hover:bg-slate-100",
+			ChatDangerButton: "border border-red-300 bg-white text-red-700 hover:bg-red-100",
+			ChatInput:        "bg-white border border-slate-300 text-slate-900",
+			ChatSaveButton:   "border border-blue-300 bg-blue-600 text-white hover:bg-blue-700",
 			ChatMeta:         "text-slate-500",
 			Header:           "border-b border-slate-300 bg-white",
 			HeaderTitle:      "text-slate-700",
@@ -809,6 +995,10 @@ func paletteFor(mode string) themePalette {
 		ChatButtonBase:   "w-full text-left rounded-md px-3 py-2 text-sm transition-colors border border-transparent",
 		ChatButtonIdle:   "bg-zinc-950 hover:bg-zinc-900",
 		ChatButtonActive: "bg-zinc-900 border-white/20",
+		ChatActionButton: "border border-white/20 bg-zinc-950 text-white/90 hover:bg-zinc-900",
+		ChatDangerButton: "border border-red-500/40 bg-zinc-950 text-red-200 hover:bg-red-500/10",
+		ChatInput:        "bg-zinc-950 border border-white/20 text-white",
+		ChatSaveButton:   "border border-blue-400/50 bg-[#2457d6] text-white hover:bg-[#2e63e0]",
 		ChatMeta:         "text-white/60",
 		Header:           "border-b border-white/10 bg-black",
 		HeaderTitle:      "text-white/80",

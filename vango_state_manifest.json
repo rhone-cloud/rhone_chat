@@ -13,7 +13,7 @@
       "debugName": "loadChatsAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 104,
+        "line": 115,
         "col": 22
       }
     },
@@ -26,7 +26,7 @@
       "debugName": "loadMessagesAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 131,
+        "line": 142,
         "col": 25
       }
     },
@@ -39,7 +39,33 @@
       "debugName": "createChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 160,
+        "line": 171,
+        "col": 23
+      }
+    },
+    "rhone_chat/app/routes.ChatRoot#setup0.local.action@3": {
+      "stableID": "c15ee6a1",
+      "class": "local",
+      "kind": "action",
+      "codecFingerprint": "fp:v1:a4f82da79700e0e70028d59cc572aa113c030924f0c44a67aedbb528b0fa58a4",
+      "persisted": false,
+      "debugName": "renameChatAction",
+      "source": {
+        "file": "app/routes/index.go",
+        "line": 196,
+        "col": 23
+      }
+    },
+    "rhone_chat/app/routes.ChatRoot#setup0.local.action@4": {
+      "stableID": "b9f8ba71",
+      "class": "local",
+      "kind": "action",
+      "codecFingerprint": "fp:v1:fa30110db74287f322220d65817f476b95b391fe4d4e162792d46f662065721a",
+      "persisted": false,
+      "debugName": "deleteChatAction",
+      "source": {
+        "file": "app/routes/index.go",
+        "line": 223,
         "col": 23
       }
     },
@@ -49,10 +75,10 @@
       "kind": "effect",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
       "persisted": false,
-      "debugName": "createChatAction",
+      "debugName": "deleteChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 190,
+        "line": 266,
         "col": 3
       }
     },
@@ -62,10 +88,10 @@
       "kind": "effect",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
       "persisted": false,
-      "debugName": "createChatAction",
+      "debugName": "deleteChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 200,
+        "line": 276,
         "col": 3
       }
     },
@@ -75,10 +101,10 @@
       "kind": "onmount",
       "codecFingerprint": "fp:v1:586aedd755559370a572572b88b49b32264f73f15956f20e19aeca1633599b9d",
       "persisted": false,
-      "debugName": "createChatAction",
+      "debugName": "deleteChatAction",
       "source": {
         "file": "app/routes/index.go",
-        "line": 185,
+        "line": 261,
         "col": 3
       }
     },
@@ -91,7 +117,7 @@
       "debugName": "chats",
       "source": {
         "file": "app/routes/index.go",
-        "line": 90,
+        "line": 99,
         "col": 12
       }
     },
@@ -104,7 +130,7 @@
       "debugName": "messages",
       "source": {
         "file": "app/routes/index.go",
-        "line": 91,
+        "line": 100,
         "col": 15
       }
     },
@@ -112,17 +138,43 @@
       "stableID": "e88168fd",
       "class": "local",
       "kind": "signal",
+      "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
+      "persisted": false,
+      "debugName": "editingChatID",
+      "source": {
+        "file": "app/routes/index.go",
+        "line": 109,
+        "col": 20
+      }
+    },
+    "rhone_chat/app/routes.ChatRoot#setup0.local.signal@11": {
+      "stableID": "9bb51fb8",
+      "class": "local",
+      "kind": "signal",
+      "codecFingerprint": "fp:v1:25adb695cf48816c4c034c305c055a4c4956ee6270648b88ae6d408d845e6c2f",
+      "persisted": false,
+      "debugName": "renameTitle",
+      "source": {
+        "file": "app/routes/index.go",
+        "line": 110,
+        "col": 18
+      }
+    },
+    "rhone_chat/app/routes.ChatRoot#setup0.local.signal@12": {
+      "stableID": "ccac82cf",
+      "class": "local",
+      "kind": "signal",
       "codecFingerprint": "fp:v1:41f520f90e9cc9458b0ee392ee4b7e474da42b9cd0c8725da11e93d92bab00c6",
       "persisted": false,
       "debugName": "runTrigger",
       "source": {
         "file": "app/routes/index.go",
-        "line": 101,
+        "line": 112,
         "col": 17
       }
     },
-    "rhone_chat/app/routes.ChatRoot#setup0.local.signal@11": {
-      "stableID": "9bb51fb8",
+    "rhone_chat/app/routes.ChatRoot#setup0.local.signal@13": {
+      "stableID": "ada2fa79",
       "class": "local",
       "kind": "signal",
       "codecFingerprint": "fp:v1:f741c9f871696f686e18c353b25327c15630e1fbb0f4bb4e973ef7cfc9fb9292",
@@ -130,7 +182,7 @@
       "debugName": "pendingRun",
       "source": {
         "file": "app/routes/index.go",
-        "line": 102,
+        "line": 113,
         "col": 17
       }
     },
@@ -143,7 +195,7 @@
       "debugName": "activeChatID",
       "source": {
         "file": "app/routes/index.go",
-        "line": 92,
+        "line": 101,
         "col": 19
       }
     },
@@ -156,7 +208,7 @@
       "debugName": "inputText",
       "source": {
         "file": "app/routes/index.go",
-        "line": 93,
+        "line": 102,
         "col": 16
       }
     },
@@ -169,7 +221,7 @@
       "debugName": "selectedModel",
       "source": {
         "file": "app/routes/index.go",
-        "line": 94,
+        "line": 103,
         "col": 20
       }
     },
@@ -182,7 +234,7 @@
       "debugName": "errorText",
       "source": {
         "file": "app/routes/index.go",
-        "line": 95,
+        "line": 104,
         "col": 16
       }
     },
@@ -195,7 +247,7 @@
       "debugName": "isThinking",
       "source": {
         "file": "app/routes/index.go",
-        "line": 96,
+        "line": 105,
         "col": 17
       }
     },
@@ -208,7 +260,7 @@
       "debugName": "activeRunID",
       "source": {
         "file": "app/routes/index.go",
-        "line": 97,
+        "line": 106,
         "col": 18
       }
     },
@@ -221,7 +273,7 @@
       "debugName": "activeAssistantID",
       "source": {
         "file": "app/routes/index.go",
-        "line": 98,
+        "line": 107,
         "col": 24
       }
     },
@@ -234,7 +286,7 @@
       "debugName": "themeMode",
       "source": {
         "file": "app/routes/index.go",
-        "line": 99,
+        "line": 108,
         "col": 16
       }
     }

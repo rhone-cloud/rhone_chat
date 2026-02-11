@@ -222,6 +222,20 @@ WHERE id = ?`, title, now, chatID)
 	return nil
 }
 
+func (s *Store) DeleteChat(ctx context.Context, chatID string) error {
+	result, err := s.db.ExecContext(ctx, `
+DELETE FROM chats
+WHERE id = ?`, chatID)
+	if err != nil {
+		return fmt.Errorf("delete chat: %w", err)
+	}
+	affected, err := result.RowsAffected()
+	if err == nil && affected == 0 {
+		return ErrNotFound
+	}
+	return nil
+}
+
 func (s *Store) UpdateChatModel(ctx context.Context, chatID, model string, now time.Time) error {
 	result, err := s.db.ExecContext(ctx, `
 UPDATE chats
